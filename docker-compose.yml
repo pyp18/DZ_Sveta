@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+    container: 
+      build: .
+      command: bash -c "touch /main/change_me.txt && tail -f /dev/null"
+      volumes:
+      - ${PWD}/:/main
+
+
+    second_container:
+      build: .
+      command: bash -c "chmod 777 /main/change_me.txt && tail -f /dev/null"
+      volumes:
+      - ${PWD}/:/main
+      depends_on: 
+      - container
